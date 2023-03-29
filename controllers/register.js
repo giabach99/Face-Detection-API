@@ -4,6 +4,8 @@ const registerHandler = (req, res, db, bcrypt) => {
         return res.status(400).json('Incorrect form submission');
     }   
     const hash = bcrypt.hashSync(password);
+    console.log("logging register hash", hash);
+    console.log("register db", db);
     db.transaction(trx => {
         trx.insert({
             hash: hash,
@@ -12,6 +14,8 @@ const registerHandler = (req, res, db, bcrypt) => {
         .into('login')
         .returning('email')
         .then(loginEmail => {
+            console.log("logging login table insertion response", loginEmail);
+            console.log('I am adding to login table');
             return trx('users')
                 .returning('*')
                 .insert({
@@ -20,6 +24,7 @@ const registerHandler = (req, res, db, bcrypt) => {
                     joined: new Date()
                 })
                 .then(user => {
+                    console.log("logging signedin user extracted", user);
                     res.json(user[0]);
                 })
         })
