@@ -11,7 +11,7 @@ const signInHandler = (req, res, db, bcrypt) => {
             console.log('logging match var:', match)
             if (match){
                 return db.select('*').from('users').where('email', '=', req.body.email)
-                    .then(user => res.json(user[0]))
+                    .then(user => res.status(200).json(user[0]))
                     .catch(err => res.status(400).json('User not found'))
             }
             else{

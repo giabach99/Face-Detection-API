@@ -27,7 +27,7 @@ const registerHandler = (req, res, db, bcrypt) => {
                 })
                 .then(user => {
                     console.log("logging signedin user extracted", user);
-                    res.json(user[0]);
+                    res.status(200).json(user[0]);
                 })
         })
         .then(trx.commit)
