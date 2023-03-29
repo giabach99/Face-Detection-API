@@ -1,11 +1,50 @@
-const Clarifai = require('clarifai');
+// const Clarifai = require('clarifai');
 
-const app = new Clarifai.App({
-    apiKey: '4373bc2f4120435ea075b849b8490186'
-});
+// const app = new Clarifai.App({
+//     apiKey: '4373bc2f4120435ea075b849b8490186'
+// });
 
+const returnClarifaiJSONRequestOptions = (imageUrl) => {    
+    const PAT = '10c14f54423e4e5d9c3b8c2f9d7490d6';
+    
+    const USER_ID = 'giabach99';
+    const APP_ID = 'my-first-application';
+    
+    const MODEL_ID = 'face-detection';
+    const IMAGE_URL = imageUrl;
+
+    const raw = JSON.stringify({
+        "user_app_id": {
+            "user_id": USER_ID,
+            "app_id": APP_ID
+        },
+        "inputs": [
+            {
+                "data": {
+                    "image": {
+                        "url": IMAGE_URL
+                    }
+                }
+            }
+        ]
+    });
+
+    const requestOptions =  {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Key ' + PAT
+        },
+        body: raw
+    };
+
+    return requestOptions;
+
+}
 const apiCallHandler = (req, res) => {
-    app.models.predict(Clarifai.FACE_DETECT_MODEL, req.body.input)
+    //app.models.predict(face-detection, req.body.input)
+    fetch("https://api.clarifai.com/v2/models/" + 'face-detection' + "/outputs", returnClarifaiJSONRequestOptions(req.body.input))
+        .then(response => response.json())
             .then(data => {
                 res.json(data);
             })
