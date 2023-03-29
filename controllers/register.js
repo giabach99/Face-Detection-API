@@ -7,13 +7,15 @@ const registerHandler = (req, res, db, bcrypt) => {
     console.log("logging register hash", hash);
     console.log("logging register email", email);
     console.log("register db", db);
-    db.insert({
-                hash: hash,
-                email: email
-            })
-            .into('login')
-            .returning('email')
-            .then(loginEmail => console.log(loginEmail).catch(err => res.status(400).json('This is error from my test loginEmail', err)));
+    res.status(200).json('register OK');
+    // db.insert({
+    //             hash: hash,
+    //             email: email
+    //         })
+    //         .into('login')
+    //         .returning('email')
+    //         .then(loginEmail => console.log(loginEmail).catch(err => res.status(400).json('This is error from my test loginEmail', err)));
+
     // db.transaction(trx => {
     //     console.log("logging register trx: ", trx);
     //     trx.insert({
