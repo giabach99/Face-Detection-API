@@ -27,13 +27,15 @@ const registerHandler = (req, res, db, bcrypt) => {
                 })
                 .then(user => {
                     console.log("logging signedin user extracted", user);
-                    res.status(200).json(user[0]);
+                    return res.status(200).json(user[0]);
                 })
         })
         .then(trx.commit)
         .catch(trx.rollback)
-    })
-    .catch(err => res.status(400).json('Unable to register, err: ', err));
+    }).catch(err => {
+        const status = err.status || 500;
+        return res.status(status).json('Unable to register, err: ', err);
+    });
 }
 
 module.exports = {
