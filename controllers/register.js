@@ -5,8 +5,10 @@ const registerHandler = (req, res, db, bcrypt) => {
     }   
     const hash = bcrypt.hashSync(password);
     console.log("logging register hash", hash);
+    console.log("logging register email", email);
     console.log("register db", db);
     db.transaction(trx => {
+        console.log("logging register trx: ", trx);
         trx.insert({
             hash: hash,
             email: email
