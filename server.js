@@ -11,11 +11,13 @@ const image = require ('./controllers/image');
 const db = knex({
     client: 'pg',
     connection: {
-      host : '127.0.0.1',
+      coneectionString: dpg-cghvgs02qv2772g8kcog-a.singapore-postgres.render.com,
+      ssl: {rejectUnauthorized: false},
+      host : 'dpg-cghvgs02qv2772g8kcog-a',
       port : 5432,
-      user : 'postgres',
-      password : '1234',
-      database : 'face-detection'
+      user : 'postmydb_wiu9_userres',
+      password : 'wCdORvu9R2X88VYCfolFfIMAToh9Lndl',
+      database : 'mydb_wiu9'
     }
   });
 
@@ -41,6 +43,6 @@ app.put('/image', (req, res) => {image.imageHandler(req, res, db)})
 
 app.post('/imageUrl', (req, res) => {image.apiCallHandler(req, res)})
 
-app.listen(3000, () => {
-    console.log("app is running on port 3000");
+app.listen(5432, () => {
+    console.log("app is running on port 5432");
 });
