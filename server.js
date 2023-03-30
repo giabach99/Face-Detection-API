@@ -55,6 +55,6 @@ app.put('/image', (req, res) => {image.imageHandler(req, res, db)})
 
 app.post('/imageUrl', (req, res) => {image.apiCallHandler(req, res)})
 
-app.listen(db.connection.port, () => {
-    console.log("app is running on port 5432");
+app.listen(process.env.PORT || 3000,  () => {
+    console.log(`app is running on port ${process.env.PORT}`);
 });
