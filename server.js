@@ -22,6 +22,17 @@ const db = knex({
   });
 
 
+// const db = knex({
+//   client: 'pg',
+//   connection: {
+//     host : '127.0.0.1',
+//     port : 5432,
+//     user : 'postgres',
+//     password : 'test', //or 1234
+//     database : 'postgres' //'face-detection'
+//   }
+// });
+
 
 
 const app = express();
@@ -31,7 +42,7 @@ app.use(express.json());
 
 
 app.get('/', (req, res) => {
-    res.send('success');
+    res.send('success boy');
 })
 
 app.post('/signin', (req, res) => {signIn.signInHandler(req, res, db, bcrypt)})
@@ -44,6 +55,6 @@ app.put('/image', (req, res) => {image.imageHandler(req, res, db)})
 
 app.post('/imageUrl', (req, res) => {image.apiCallHandler(req, res)})
 
-app.listen(5432, () => {
+app.listen(db.connection.port, () => {
     console.log("app is running on port 5432");
 });

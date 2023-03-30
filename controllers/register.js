@@ -6,8 +6,16 @@ const registerHandler = (req, res, db, bcrypt) => {
     const hash = bcrypt.hashSync(password);
     console.log("logging register hash", hash);
     console.log("logging register email", email);
-    console.log("register db", db);
-    res.status(200).json('register OK');
+    // console.log("register db");   
+
+
+    //  db.transaction(trx => {
+    //     console.log("logging register trx: ", trx);
+    //     trx.insert({
+    //         hash: hash,
+    //         email: email
+    //     }).into('login').returning('*').then(value => console.log("after login insertion: ", value))});
+    // res.json('registered tested OK');
 
 
     db.transaction(trx => {
@@ -26,10 +34,7 @@ const registerHandler = (req, res, db, bcrypt) => {
                     console.log("logging signedin user extracted", user);
                     return res.status(200).json(user[0]);
                 })
-        }).then(trx.commit).catch(trx.rollback)}).catch(err => {
-                const status = err.status || 500;
-                return res.status(status).json('Unable to register, err: ', err);
-            });
+        }).then(trx.commit).catch(trx.rollback);}).catch(err => res.status(400).json('Unable to register'));
 }
 
 module.exports = {

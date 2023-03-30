@@ -4,6 +4,10 @@
 //     apiKey: '4373bc2f4120435ea075b849b8490186'
 // });
 
+//app.models.predict(face-detection, req.body.input)
+
+const fetch = require("node-fetch");
+
 const returnClarifaiJSONRequestOptions = (imageUrl) => {    
     const PAT = '10c14f54423e4e5d9c3b8c2f9d7490d6';
     
@@ -41,8 +45,7 @@ const returnClarifaiJSONRequestOptions = (imageUrl) => {
     return requestOptions;
 
 }
-const apiCallHandler = (req, res) => {
-    //app.models.predict(face-detection, req.body.input)
+const apiCallHandler = (req, res) => {    
     fetch("https://api.clarifai.com/v2/models/" + 'face-detection' + "/outputs", returnClarifaiJSONRequestOptions(req.body.input))
         .then(response => response.json())
             .then(data => {
